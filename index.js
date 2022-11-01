@@ -12,7 +12,7 @@ axios.get('https://0df27f83-8083-4e98-83a5-911b8ac85b03.mock.pstmn.io/grab')
       "<div>" +
       '<img class="product-img" src="' +
       product.imgUrl +
-      '">' +
+      '">' + 
       "</div>" +
       '<div class="product-contents">' +
       '<span class="product-name">' +
@@ -36,3 +36,4 @@ axios.get('https://0df27f83-8083-4e98-83a5-911b8ac85b03.mock.pstmn.io/grab')
 }).catch(function(error){
   console.error('error 발생 : ', error);
 });
+  
