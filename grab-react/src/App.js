@@ -18,7 +18,7 @@ function App() {
       <div onClick={sayHello2}>클릭해줘잉</div>
       <ChildComponent name="그랩" age={27}/>
       <ChildComponent name="철수" age={17}/>
-      <ChildComponent name="길동" age={37}/>
+      <ChildComponent name="" age={37}/>
     </div>
   );
 }
