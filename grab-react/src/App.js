@@ -1,6 +1,7 @@
+import "antd/dist/antd.css";
 import './App.css';
 import MainPageComponent from './main';
-import {Switch, Route} from "react-router-dom";
+import {Switch, Route, Link} from "react-router-dom";
 import UploadPage from "./upload";
 import ProductPage from "./product";
 
@@ -9,6 +10,14 @@ function App() {
   
   return (
     <div>
+      <div id="header">
+        <div id="header-area">
+          <Link to="/">
+            <img src="/images/icons/logo.png" />
+          </Link>
+        </div>
+      </div>
+      <div id="body">
       <Switch>
         <Route exact={true} path="/">
           <MainPageComponent/>
@@ -20,6 +29,8 @@ function App() {
           <UploadPage/>
         </Route>
       </Switch>
+      </div>
+      <div id="footer"></div>
     </div>
   );
 }
