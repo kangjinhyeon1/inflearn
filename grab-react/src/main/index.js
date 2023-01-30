@@ -7,7 +7,7 @@ function MainPageComponent() {
   const [products, setProducts] = React.useState([]);
   React.useEffect(function () {
     axios
-      .get("https://0df27f83-8083-4e98-83a5-911b8ac85b03.mock.pstmn.io/grab")
+      .get("http://localhost:8080/products")
       .then(function (result) {
         const products = result.data.products;
         setProducts(products);
@@ -29,7 +29,7 @@ function MainPageComponent() {
               <div className="product-card">
                 <Link className="product-link" to={`/products/${products.id}`}>
                   <div>
-                    <img className="product-img" src={products.imagUrl} />
+                    <img className="product-img" src={products.imageUrl} />
                   </div>
                   <div className="product-contents">
                     <span className="product-name">{products.name}</span>
