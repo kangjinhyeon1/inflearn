@@ -2,31 +2,30 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./index.css";
+import {API_URL} from "../config/constants.js";
 
 function ProductPage() {
   const { id } = useParams();
   const [product, setProducts] = useState(null);
   useEffect(function () {
     axios
-      .get(
-        `https://0df27f83-8083-4e98-83a5-911b8ac85b03.mock.pstmn.io/products/${id}`
-      )
+      .get(`${API_URL}/products/${id}`)
       .then(function (result) {
-        setProducts(result.data);
+        setProducts(result.data.product);
       })
       .catch(function (error) {
         console.error(error);
       });
   }, []);
 
-  if(product === null){
-    return <h1>상품 정보를 받고 있습니다...</h1>
+  if (product === null) {
+    return <h1>상품 정보를 받고 있습니다...</h1>;
   }
 
   return (
     <div>
       <div id="image-box">
-        <img src={"/" + product.imagUrl} />
+        <img src={"/" + product.imageUrl} />
       </div>
       <div id="profile-box">
         <img src="/images/icons/avatar.png" />
