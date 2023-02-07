@@ -51,17 +51,14 @@ app.post("/products", (req, res) => {
   })
     .then((result) => {
       console.log("상품 생성 결과", result);
-      res.send({
+      return res.send({
         result,
       });
     })
     .catch((error) => {
       console.error(error);
-      res.status(400).send("상품 업로드에 문제가 발생했습니다");
+      return res.status(400).send("상품 업로드에 문제가 발생했습니다");
     });
-  res.send({
-    body,
-  });
 });
 
 app.get("/products/:id", (req, res) => {

@@ -40,7 +40,6 @@ function App() {
         </Route>
       </Switch>
       </div>
-      <div id="footer"></div>
     </div>
   );
 }
