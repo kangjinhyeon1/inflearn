@@ -2,40 +2,42 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const models = require("./models");
-const multer = require('multer');
+const multer = require("multer");
 const upload = multer({
-    storage: multer.diskStorage({
-        destination : function(req, file, cb){
-            cb(null, 'uploads/')
-        },
-        filename: function(req, file, cb){
-            cb(null, file.originalname);
-        }
-    })
-})
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    },
+  }),
+});
 const port = 8080;
 
 app.use(express.json());
 app.use(cors());
-app.use('/uploads',express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
-app.get("/banners", (req,res)=>{
+app.get("/banners", (req, res) => {
   models.Banner.findAll({
-    limit: 2
-  }).then((result)=>{
-    res.send({
-      banners: result,
-    })
-  }).catch((error)=>{
-    console.errror(error);
-    res.status(500).send('에러가 발생했습니다');
+    limit: 2,
   })
-})
+    .then((result) => {
+      res.send({
+        banners: result,
+      });
+    })
+    .catch((error) => {
+      console.errror(error);
+      res.status(500).send("에러가 발생했습니다");
+    });
+});
 
 app.get("/products", (req, res) => {
   models.Product.findAll({
     order: [["createdAt", "DESC"]],
-    attributes: ["id", "name", "price", "createdAt", "seller", "imageUrl"],
+    attributes: ["id", "name", "price", "createdAt", "seller", "imageUrl", "soldout"],
   })
     .then((result) => {
       console.log("PRODUCTS : ", result);
@@ -61,6 +63,7 @@ app.post("/products", (req, res) => {
     price,
     seller,
     imageUrl,
+    soldout
   })
     .then((result) => {
       console.log("상품 생성 결과", result);
@@ -94,13 +97,34 @@ app.get("/products/:id", (req, res) => {
     });
 });
 
-app.post('/image',upload.single('image'),(req, res) => {
-    const file = req.file;
-    console.log(file);
+app.post("/image", upload.single("image"), (req, res) => {
+  const file = req.file;
+  console.log(file);
+  res.send({
+    imageUrl: file.path,
+  });
+});
+
+app.post("/purchase/:id", (req, res) => {
+  const { id } = req.params;
+  models.Product.update(
+    {
+      soldout: 1,
+    },
+    {
+      where: {
+        id,
+      },
+    }
+  ).then((result)=>{
     res.send({
-        imageUrl : file.path
+      result: true,
     })
-})
+  }).catch((error)=>{
+    console.error(error);
+    res.status(500).send('에러가 발생했습니다.');
+  })
+});
 
 app.listen(port, () => {
   console.log("진현의 쇼핑몰 서버가 돌아가고 있습니다");
